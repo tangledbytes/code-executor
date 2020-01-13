@@ -3,7 +3,8 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	languages "github.com/utkarsh-pro/code-executor/Containers"
+	languages "github.com/utkarsh-pro/code-executor/containers"
+	"github.com/utkarsh-pro/code-executor/executor"
 	"os"
 )
 
@@ -34,9 +35,13 @@ func main() {
 	if err != nil {
 		fmt.Println(err.Error())
 	}
-	fmt.Printf("Type: %T\nContent: %+v\nAddress: %p\n", *decodedJSON, *decodedJSON, decodedJSON)
-	_, ok := languages.Languages[decodedJSON.Language]
-	if ok {
 
+	path, ok := languages.Languages[decodedJSON.Language]
+
+	if ok {
+		executor.RunDockerContainer(path, decodedJSON.Stdin)
+	} else {
+		fmt.Println("Language not supported")
 	}
+
 }
