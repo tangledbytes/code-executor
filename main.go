@@ -3,6 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
+	languages "github.com/utkarsh-pro/code-executor/Containers"
 	"os"
 )
 
@@ -24,6 +25,7 @@ type EvaluationFiles struct {
 type Result struct {
 	Stdout string `json:"stdout"`
 	Stderr string `json:"stderr"`
+	Error  string `json:"error"`
 }
 
 func main() {
@@ -33,4 +35,8 @@ func main() {
 		fmt.Println(err.Error())
 	}
 	fmt.Printf("Type: %T\nContent: %+v\nAddress: %p\n", *decodedJSON, *decodedJSON, decodedJSON)
+	_, ok := languages.Languages[decodedJSON.Language]
+	if ok {
+
+	}
 }
